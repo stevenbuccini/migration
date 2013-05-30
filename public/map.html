@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAkbUX691S8lRUMxcnmpcBzZjLsu1odlfA&sensor=false">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+
+        var CENTEROFNC = new google.maps.LatLng(35.399756, -79.766613);
+
+        var mapOptions = {
+          zoom: 8,
+          center: CENTEROFNC,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+        google.maps.event.addListener(map, 'click', function(e){
+          placeMarker(e.latLng, map);
+        });
+
+        google.maps.event.addListener(map, 'click', function(){
+          infowindow.open(map, marker);
+        });
+
+      }
+
+        function placeMarker(position, map){
+          var marker = new google.maps.Marker({
+            position: position,
+            map: map
+          });
+          var infowindow = new google.maps.InfoWindow({
+            content: "This marker is located at" + String(position),]
+          });
+        }
+
+      
+      google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"/>
+  </body>
+</html>
