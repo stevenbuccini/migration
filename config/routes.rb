@@ -1,4 +1,12 @@
 Iceman::Application.routes.draw do
+  get "base/index"
+
+  match 'auth/:provider/callback', to: 'sessions#create'
+  match 'auth/failure', to: redirect('/')
+  match 'signout', to: 'sessions#destroy', as: 'signout'
+
+  root :to => 'base#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
