@@ -1,54 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 100% }
-    </style>
-    <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAkbUX691S8lRUMxcnmpcBzZjLsu1odlfA&sensor=false">
-    </script>
-    <script type="text/javascript">
-      function initialize() {
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+		<style type="text/css">
+			html { height: 100%}
+			body { height: 100%; margin:0; padding: 0}
+			#map-canvas { height: 100%;}
+		</style>
 
-        var CENTEROFNC = new google.maps.LatLng(35.399756, -79.766613);
+		<script type="text/javascript"
+			src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAkbUX691S8lRUMxcnmpcBzZjLsu1odlfA&sensor=false">
+		</script>
 
-        var mapOptions = {
-          zoom: 8,
-          center: CENTEROFNC,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
+		<script type="text/javascript">
+		var CENTER_OF_US = new google.maps.LatLng(39.828175, -98.5795);
+			function initialize() {
+				var mapOptions = {
+					center: new google.maps.LatLng(39.828175, -98.5795),
+					zoom: 4,
+					//disableDefaultUI: true,
+					//disableDoubleClickZoom: true,
+					//keyboardShortcuts: false,
+					panControl: false,
+					rotateControl: false,
+					streetViewControl: false,
+					mapTypeControl: false,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+			}
 
-        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+			google.maps.event.addDomListener(window, 'load', initialize);
+		</script>
 
-        google.maps.event.addListener(map, 'click', function(e){
-          placeMarker(e.latLng, map);
-        });
+	</head>
 
-        google.maps.event.addListener(map, 'click', function(){
-          infowindow.open(map, marker);
-        });
-
-      }
-
-        function placeMarker(position, map){
-          var marker = new google.maps.Marker({
-            position: position,
-            map: map
-          });
-          var infowindow = new google.maps.InfoWindow({
-            content: "This marker is located at" + String(position),]
-          });
-        }
-
-      
-      google.maps.event.addDomListener(window, 'load', initialize);
-
-    </script>
-  </head>
-  <body>
-    <div id="map-canvas"/>
-  </body>
-</html>
+	<body>
+		<div id="map-canvas"/>
+	</body>
+<html>
