@@ -18,32 +18,47 @@ class User < ActiveRecord::Base
   	 @facebook ||= Koala::Facebook::API.new(oauth_token)
   end
 
+
   def places
   	homes=Array.new
   	locs=Array.new
-
-
-  	friends=facebook.get_connections("me","friends")
-  	friends.each do |friend|
-  		
-  		person=facebook.get_object(friend["id"])
-  		place1 = person["hometown"]
-  		
-  		
-  		if (place1 !=nil) 
-  			place2=person["location"]
-  			if (place2 != nil)
-  				homes.push(facebook.get_object(place1["id"])["location"])
-  				locs.push(facebook.get_object(place2["id"])["location"])
-  			end
+  	
+  	friends_basic = facebook.batch do |batch_api|
+    	batch_api.get_connections("me", "friends", {:limit => 1000}, :batch_args => {:name => "get-friends"})
+    	batch_api.get_objects("{result=get-friends:$.data.*.id}")
+  	end
+  	friends_basic[1].each do |friend|
+  		if (friend[1]["hometown"]!=nil and friend[1]["location"] !=nil)
+  			homes.push(friend[1]["hometown"]["id"])
+  			locs.push(friend[1]["location"]["id"])
   		end
   	end
+  	
+  	homes_almost,locs_almost=facebook.batch do |batch_api|
+  		batch_api.get_objects(homes)
+  		batch_api.get_objects(locs)
+  	end
+
+  	a=Hash.new
+  	b=Hash.new
+
+  	homes_almost.each_key do |key|
+  		a[key]=homes_almost[key]["location"]
+  	end
+  	locs_almost.each_key do |key|
+  		b[key]=locs_almost[key]["location"]
+  	end
+
+
   	self.hometowns=homes
   	self.locations=locs
+  	self.hometowns_info=a
+  	self.locations_info=b
+
+
+ 
+
+
   end
-
-
-
- 	
-
+  	
 end	
