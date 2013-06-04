@@ -1,4 +1,6 @@
 Iceman::Application.routes.draw do
+  get "users/index"
+
   get "base/index"
 
   match 'auth/:provider/callback', to: 'sessions#create'
