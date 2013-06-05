@@ -1,0 +1,9 @@
+<h1> <%=current_user.name%> this is your list of friends locations </h1>
+
+<% current_user.places %>
+
+<%current_user.hometowns.each do |each_hometown| %>
+
+	<p> the hash in its entirety <%=current_user.hometowns_info[each_hometown]%>
+
+	<p> the latitiude: <%= current_user.hometowns_info[each_hometown]["latitude"] %>
