@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   end
 
   def map
-  	@user = User.from_omniauth(env["omniauth.auth"])
+  	
 
   end
 

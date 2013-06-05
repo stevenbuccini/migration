@@ -9,6 +9,10 @@ Iceman::Application.routes.draw do
 
   root :to => 'base#index'
 
+  resources :users
+
+  match 'example', to: 'users#map'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
