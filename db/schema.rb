@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130603180055) do
+ActiveRecord::Schema.define(:version => 20130611093754) do
 
 # Could not dump table "users" because of following StandardError
 #   Unknown type 'array' for column 'hometowns'

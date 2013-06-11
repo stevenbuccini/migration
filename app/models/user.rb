@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  serialize :hometowns, Array
+  serialize :locations, Array
+  serialize :hometowns_info, Hash
+  serialize :locations_info, Hash
   attr_accessible :name, :oauth_expires_at, :oauth_token, :provider, :uid
 
   def self.from_omniauth(auth)
@@ -10,6 +14,7 @@ class User < ActiveRecord::Base
 	    user.image =auth.info.image
 	    user.oauth_token = auth.credentials.token
 	    user.oauth_expires_at = Time.at(auth.credentials.expires_at)
+      user.been_checked=false
 	    user.save!
 		end
 	end
@@ -55,7 +60,8 @@ class User < ActiveRecord::Base
   	self.hometowns_info=a
   	self.locations_info=b
 
-
+    self.been_checked = true
+    self.save
  
 
 
