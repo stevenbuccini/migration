@@ -13,7 +13,7 @@
     <script type="text/javascript">
       function initialize() {
         var mapOptions = {
-          center: new google.maps.LatLng(39.828175, -98.5795),
+          center: new google.maps.LatLng(39.828175,-98.5795),
 					zoom: 4,
 					//disableDefaultUI: true,
 					//disableDoubleClickZoom: true,
@@ -22,6 +22,8 @@
 					rotateControl: false,
 					streetViewControl: false,
 					mapTypeControl: false,
+					minZoom: 2,
+					maxZoom: 9,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
