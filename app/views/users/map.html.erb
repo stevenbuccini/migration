@@ -1,5 +1,4 @@
 
-
  <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <style type="text/css">
@@ -46,7 +45,7 @@
 				//Should we store LatLong instead of hometowns?
 				<% placedMarkers = {} %>
 
-				<%current_user.hometowns.each do |each_hometown| %>
+				<%current_user.friends.each do |friend| %>
 					console.log("We're about to load a marker");
 					//Create a new marker on each loop, place on the map.
 					//each marker will have a unique name attached to it.
@@ -55,15 +54,15 @@
 					<% if !placedMarkers.has_key?(each_hometown) %>
 						var <%= "marker#{count}" %> = new google.maps.Marker({
 							position: new google.maps.LatLng(
-								<%= current_user.hometowns_info[each_hometown]["latitude"] %>, //Latitude
-								<%= current_user.hometowns_info[each_hometown]["longitude"] %>), //Longitude
+								<%= friend.hometown_latitude %>, // used to be current_user.hometowns_info[each_hometown]["latitude"]
+								<%= friend.hometown_longitude %>), //Longitude
 							map: inputMap,
 							title: 'Map'
 						});
 						console.log("A marker should have been placed");
 
 						var <%= "info#{count}" %> = new google.maps.InfoWindow({
-							content: <%= "Friend# #{count}" %> //replace with friends actual name
+							content: <%= friend.name + " #{count}" %> //replace with friends actual name
 						})
 
 						//Add the marker to the placedMakers hash
