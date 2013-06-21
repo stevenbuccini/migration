@@ -37,19 +37,6 @@
 				<% if current_user.been_checked != true %>
 					<% current_user.places %>
 				<%end%>
-<<<<<<< HEAD
-				<%current_user.friends.each do |friend| %>
-					console.log("We're about to load a marker");
-					//Create a new marker on each loop, place on the map.
-					new google.maps.Marker({
-						position: new google.maps.LatLng(
-							<%= friend.hometown_latitude %>, //Latitude
-							<%= friend.hometown_longitude %>), //Longitude
-						map: inputMap,
-						title: 'Map'
-					});
-					console.log("A marker should have been placed");
-=======
 
 				//instantiate a counter variable
 				<% count = 0 %>
@@ -64,7 +51,7 @@
 					//each marker will have a unique name attached to it.
 
 					//Is there already a marker at this hometown?
-					<% if !placedMarkers.has_key?(each_hometown) %>
+					<% if placedMarkers[friend.hometown] == nil %>
 						var <%= "marker#{count}" %> = new google.maps.Marker({
 							position: new google.maps.LatLng(
 								<%= friend.hometown_latitude %>, // used to be current_user.hometowns_info[each_hometown]["latitude"]
@@ -79,7 +66,7 @@
 						})
 
 						//Add the marker to the placedMakers hash
-						<% placedMarkers[each_hometown] = "info#{count}"  %>
+						<% placedMarkers[friend.hometown] = "info#{count}"  %>
 
 						//add DOM listener
 						google.maps.event.addListener(marker, 'click', function() {
@@ -87,12 +74,12 @@
 							});
 
 						//increment the counter
-						<% count++ %>
+						<% count=count+1 %>
 
-					<% else %>
+					// <% else %>
 					//grab the infowindow object.  Append new friends name there via the getContent() and
 					//setContent() method
->>>>>>> c34f68ee0a132d31fdf8139fa9056aa02cfc767f
+
 
 					<%end%>
 
