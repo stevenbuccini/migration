@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   serialize :hometowns_info, Hash
   serialize :locations_info, Hash
   attr_accessible :name, :oauth_expires_at, :oauth_token, :provider, :uid
+  has_many :friends
 
   def self.from_omniauth(auth)
   	where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
@@ -27,6 +28,7 @@ class User < ActiveRecord::Base
   def places
   	homes=Array.new
   	locs=Array.new
+    friends=Array.new
   	
   	friends_basic = facebook.batch do |batch_api|
     	batch_api.get_connections("me", "friends", {:limit => 1000}, :batch_args => {:name => "get-friends"})
@@ -36,6 +38,7 @@ class User < ActiveRecord::Base
   		if (friend[1]["hometown"]!=nil and friend[1]["location"] !=nil)
   			homes.push(friend[1]["hometown"]["id"])
   			locs.push(friend[1]["location"]["id"])
+        friends.push(friend[1])
   		end
   	end
   	
@@ -54,11 +57,20 @@ class User < ActiveRecord::Base
   		b[key]=locs_almost[key]["location"]
   	end
 
+    master=homes.zip(locs,friends)
 
-  	self.hometowns=homes
-  	self.locations=locs
-  	self.hometowns_info=a
-  	self.locations_info=b
+    
+
+    master.each do |each|
+      User.first.friends.new(:name => each[2]["name"],
+        :image => each[2]["username"],
+        :hometown => each[0],
+        :current => each[1], 
+        :hometown_latitude => a[each[0]]["latitude"],
+        :hometown_longitude => a[each[0]]["longitude"],
+        :current_longitude => b[each[1]]["longitude"],
+        :current_latitude => b[each[1]]["latitude"]).save
+    end
 
     self.been_checked = true
     self.save

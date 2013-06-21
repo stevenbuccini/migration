@@ -38,13 +38,13 @@
 				<% if current_user.been_checked != true %>
 					<% current_user.places %>
 				<%end%>
-				<%current_user.hometowns.each do |each_hometown| %>
+				<%current_user.friends.each do |friend| %>
 					console.log("We're about to load a marker");
 					//Create a new marker on each loop, place on the map.
 					new google.maps.Marker({
 						position: new google.maps.LatLng(
-							<%= current_user.hometowns_info[each_hometown]["latitude"] %>, //Latitude
-							<%= current_user.hometowns_info[each_hometown]["longitude"] %>), //Longitude
+							<%= friend.hometown_latitude %>, //Latitude
+							<%= friend.hometown_longitude %>), //Longitude
 						map: inputMap,
 						title: 'Map'
 					});
