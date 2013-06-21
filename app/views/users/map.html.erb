@@ -77,9 +77,11 @@
 						//increment the counter
 						<% count=count+1 %>
 
-					// <% else %>
+					<% else %>
 					//grab the infowindow object.  Append new friends name there via the getContent() and
 					//setContent() method
+						var temp = <%= placedMarkers[friend.hometown] %>.getContent();
+						<%= placedMarkers[friend.hometown] %>.setContent(temp+"<br>"+'<%=friend.name%>');
 
 
 					<%end%>
