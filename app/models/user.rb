@@ -1,8 +1,5 @@
 class User < ActiveRecord::Base
-  serialize :hometowns, Array
-  serialize :locations, Array
-  serialize :hometowns_info, Hash
-  serialize :locations_info, Hash
+ 
   attr_accessible :name, :oauth_expires_at, :oauth_token, :provider, :uid
   has_many :friends
 
@@ -71,6 +68,7 @@ class User < ActiveRecord::Base
         :current_longitude => b[each[1]]["longitude"],
         :current_latitude => b[each[1]]["latitude"]).save
     end
+ 
 
     self.been_checked = true
     self.save
