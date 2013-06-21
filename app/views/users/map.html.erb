@@ -61,8 +61,7 @@
 						console.log("A marker should have been placed");
 
 						var <%= "info#{count}" %> = new google.maps.InfoWindow({
-							//content: '\'' +  <%= friend.name %>.toString(); + '\'',//replace with friends actual name
-							content: "test",
+							content: '<%= friend.name %>',//replace with friends actual name
 						})
 
 						//Add the marker to the placedMakers hash
