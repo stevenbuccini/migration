@@ -37,7 +37,7 @@
 				<% if current_user.been_checked != true %>
 					<% current_user.places %>
 				<%end%>
-<<<<<<< HEAD
+
 				<%current_user.friends.each do |friend| %>
 					console.log("We're about to load a marker");
 					//Create a new marker on each loop, place on the map.
@@ -49,7 +49,7 @@
 						title: 'Map'
 					});
 					console.log("A marker should have been placed");
-=======
+
 
 				//instantiate a counter variable
 				<% count = 0 %>
@@ -92,7 +92,7 @@
 					<% else %>
 					//grab the infowindow object.  Append new friends name there via the getContent() and
 					//setContent() method
->>>>>>> c34f68ee0a132d31fdf8139fa9056aa02cfc767f
+
 
 					<%end%>
 
