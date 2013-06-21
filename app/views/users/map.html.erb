@@ -38,18 +38,50 @@
 				<% if current_user.been_checked != true %>
 					<% current_user.places %>
 				<%end%>
+
+				//instantiate a counter variable
+				<% count = 0 %>
+
+				//instantiate an empty hash to store hometown=>Marker pairings
+				//Should we store LatLong instead of hometowns?
+				<% placedMarkers = {} %>
+
 				<%current_user.hometowns.each do |each_hometown| %>
 					console.log("We're about to load a marker");
 					//Create a new marker on each loop, place on the map.
-					new google.maps.Marker({
-						position: new google.maps.LatLng(
-							<%= current_user.hometowns_info[each_hometown]["latitude"] %>, //Latitude
-							<%= current_user.hometowns_info[each_hometown]["longitude"] %>), //Longitude
-						map: inputMap,
-						title: 'Map'
-					});
-					console.log("A marker should have been placed");
+					//each marker will have a unique name attached to it.
 
+					//Is there already a marker at this hometown?
+					<% if !placedMarkers.has_key?(each_hometown) %>
+						var <%= "marker#{count}" %> = new google.maps.Marker({
+							position: new google.maps.LatLng(
+								<%= current_user.hometowns_info[each_hometown]["latitude"] %>, //Latitude
+								<%= current_user.hometowns_info[each_hometown]["longitude"] %>), //Longitude
+							map: inputMap,
+							title: 'Map'
+						});
+						console.log("A marker should have been placed");
+
+						var <%= "info#{count}" %> = new google.maps.InfoWindow({
+							content: <%= "Friend# #{count}" %> //replace with friends actual name
+						})
+
+						//Add the marker to the placedMakers hash
+						<% placedMarkers[each_hometown] = "info#{count}"  %>
+
+						//add DOM listener
+						google.maps.event.addListener(marker, 'click', function() {
+  								<%= "info#{count}" %>.open(inputMap,<%= "marker#{count}" %>);
+							});
+
+						//increment the counter
+						<% count++ %>
+
+					<% else %>
+					//grab the infowindow object.  Append new friends name there via the getContent() and
+					//setContent() method
+
+					<%end%>
 
 				<%end%>
 			
