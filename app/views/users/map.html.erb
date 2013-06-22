@@ -62,7 +62,9 @@
 
 
 						var <%= "info#{count}" %> = new google.maps.InfoWindow({
-							content: '<%= friend.name %>',//replace with friends actual name
+							content: 
+							'<IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture"> <%= friend.name %>'
+							,//used to be just friend.name
 						})
 
 						//Add the marker to the placedMakers hash
@@ -81,7 +83,8 @@
 					//grab the infowindow object.  Append new friends name there via the getContent() and
 					//setContent() method
 						var temp = <%= placedMarkers[friend.hometown] %>.getContent();
-						<%= placedMarkers[friend.hometown] %>.setContent(temp+"<br>"+'<%=friend.name%>');
+						<%= placedMarkers[friend.hometown] %>.setContent(temp+"<br>"+'<IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture"> <%= friend.name %>');
+						//used to be + '<%=friend.name%>'
 
 
 					<%end%>
