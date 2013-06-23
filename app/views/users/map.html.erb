@@ -74,6 +74,7 @@
 						var <%= "info#{count}" %> = new google.maps.InfoWindow({
 							content: 
 							'<div class="friend"> <IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture"> <%= friend.name %></div>',//used to be just friend.name
+							maxWidth: 300,
 						})
 
 						//Add the marker to the placedMakers hash
