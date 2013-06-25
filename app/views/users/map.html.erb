@@ -5,15 +5,19 @@
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
       #map-canvas { height: 100% }
+      body {
+      	font-family: Arial;
+      }
       .friend {
       	font-size: 20px;
-      	font-family: Arial;
-      	padding: 5px;
-      	line-height: 50px;
+      	margin: 5px; /* This margin collapses! */
+      	display: block; /*takes up the entire container*/
+      	line-height: 80px; /* set to height of picture, centers text vertically in div. Only works for one line of text */
+      	height: 80px; /* set to the height of the picture, prevents weird alignment of divs */
       }
 
       .friend img {
-      	padding-right: 10px;
+      	margin-right: 10px;
       }
     </style>
     <script type="text/javascript"
@@ -73,7 +77,7 @@
 
 						var <%= "info#{count}" %> = new google.maps.InfoWindow({
 							content: 
-							'<div class="friend"><strong><%= friend.hometown%></strong><hr/><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=80&height=80"> <%= friend.name %></div>',//used to be just friend.name
+							'<strong><%= friend.hometown%></strong><hr/><div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=80&height=80"> <%= friend.name %></div>',//used to be just friend.name
 							maxWidth: 300,
 						})
 
