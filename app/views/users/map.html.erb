@@ -93,7 +93,7 @@
 					//grab the infowindow object.  Append new friends name there via the getContent() and
 					//setContent() method
 						var temp = <%= placedMarkers[friend.hometown] %>.getContent();
-						<%= placedMarkers[friend.hometown] %>.setContent(temp+'<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture"> <%= friend.name %></div>');
+						<%= placedMarkers[friend.hometown] %>.setContent(temp+'<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=100&height=100"> <%= friend.name %></div>');
 						//used to be + '<%=friend.name%>'
 
 
