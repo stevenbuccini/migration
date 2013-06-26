@@ -34,7 +34,8 @@ function initialize() {
     path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
     scale: 3,
     strokeColor: '#393',
-    fillColor: '#393'
+    fillColor: '#393',
+    strokeOpacity: 1
   };
 
   line = new google.maps.Polyline({
@@ -45,7 +46,8 @@ function initialize() {
     }],
     geodesic: true,
     map: map,
-    strokeWeight: 2
+    strokeWeight: 2,
+    strokeOpacity: 0
   });
 
   window.setTimeout(function(){
@@ -85,7 +87,7 @@ function animateArrow(marker, inputMap) {
 
       line.set('icons', icons);
       //console.log(count);
-      if (percent >= .98){
+      if (percent >= 1){
         window.clearInterval(test123);
         line.setOptions({
           icons: []
