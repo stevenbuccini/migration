@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
  
   attr_accessible :name, :oauth_expires_at, :oauth_token, :provider, :uid
-  has_many :friends
+  
+  has_many :locations
 
   def self.from_omniauth(auth)
   	where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
@@ -26,8 +27,11 @@ class User < ActiveRecord::Base
   	homes=Array.new
   	locs=Array.new
     friends=Array.new
-    home_objects=Array.new
-    location_objects=Array.new
+
+    homenames=Array.new
+    locationnames=Array.new
+
+    
   	
   	friends_basic = facebook.batch do |batch_api|
     	batch_api.get_connections("me", "friends", {:limit => 1000}, :batch_args => {:name => "get-friends"})
@@ -36,12 +40,14 @@ class User < ActiveRecord::Base
   	friends_basic[1].each do |friend|
   		if (friend[1]["hometown"]!=nil and friend[1]["location"] !=nil)
   			homes.push(friend[1]["hometown"]["id"])
-        home_objects.push(Location.new(:name => friend[1]["hometown"]["name"], :id => friend[1]["hometown"]["id"])
+        homenames.push(friend[1]["hometown"]["name"])
   			locs.push(friend[1]["location"]["id"])
-        location_objects.push(Location.new(:name => friend[1]["location"]["name"], :id => friend[1]["location"]["id"]))
+        locationnames.push(friend[1]["location"]["name"])
         friends.push(friend[1])
   		end
   	end
+
+   
   	
   	homes_almost,locs_almost=facebook.batch do |batch_api|
   		batch_api.get_objects(homes)
@@ -58,24 +64,34 @@ class User < ActiveRecord::Base
   		b[key]=locs_almost[key]["location"]
   	end
 
-    # master=homes.zip(locs,friends)
-    # master.each do |each|
-    #   self.friends.new(:name => each[2]["name"],
-    #     :image => each[2]["username"],
-    #     :hometown => each[0],
-    #     :current => each[1], 
-    #     :hometown_latitude => a[each[0]]["latitude"],
-    #     :hometown_longitude => a[each[0]]["longitude"],
-    #     :current_longitude => b[each[1]]["longitude"],
-    #     :current_latitude => b[each[1]]["latitude"]).save
-    # end
- 
-    hometowns =homes.zip(home_objects)
+    hometown_objects = Hash.new
+    location_objects=Hash.new
 
-    hometowns.each do |each|
-      each[1].latitude = a[each[0]]["latitude"]
-      each[1].longitude = a[each[0]]["longitude"]
+    master_hometowns=homes.zip(homenames,friends)
+    master_hometowns.each do |each|
+      if hometown_objects[each[0]] == nil
+        self.locations.new(:name => each[1], :fb_id => each[0], 
+          :latitude => a[each[0]]["latitude"], 
+          :longitude => a[each[0]]["longitude"],
+          :is_hometown => true).save
+          hometown_objects[each[0]]=each[0]
+       end
+      Location.where(fb_id: each[0]).first.friends.new(:name => each[2]["name"],
+      :image => each[2]["username"]).save
+    end
 
+    master_current_locations=locs.zip(locationnames,friends)
+    master_current_locations.each do |each|
+      if location_objects[each[0]] == nil
+        self.locations.new(:name => each[1], :fb_id => each[0], 
+          :latitude => b[each[0]]["latitude"], 
+          :longitude => b[each[0]]["longitude"],
+          :is_hometown => false).save
+          location_objects[each[0]]=each[0]
+       end
+       Location.where(:fb_id => each[0],:is_hometown => false).first.friends.new(:name => each[2]["name"],
+       :image => each[2]["username"]).save
+    end
 
 
     self.been_checked = true
