@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Animating symbols</title>
+    <link href="http://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+var line;
+var test123;
+
+function initialize() {
+  var mapOptions = {
+    center: new google.maps.LatLng(36.0725, -79.7922),
+    zoom: 6,
+    mapTypeId: google.maps.MapTypeId.ROAD
+  };
+
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  var startMarker = new google.maps.Marker({
+    position: new google.maps.LatLng(36.0725, -79.7922),
+    map: map
+  })
+
+  var lineCoordinates = [
+    new google.maps.LatLng(36.0725, -79.7922),
+    new google.maps.LatLng(37.8717, -122.2728)
+  ];
+
+  var lineSymbol = {
+    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+    scale: 3,
+    strokeColor: '#393',
+    fillColor: '#393'
+  };
+
+  line = new google.maps.Polyline({
+    path: lineCoordinates,
+    icons: [{
+      icon: lineSymbol,
+      offset: '0%'
+    }],
+    geodesic: true,
+    map: map,
+    strokeWeight: 2
+  });
+
+  window.setTimeout(function(){
+    animateArrow(startMarker, map);
+    }, 5000);
+
+
+
+  
+}
+
+function animateArrow(marker, inputMap) {
+
+  //EaseOutQuint
+  function easeOutQuint(x, t, b, c, d){
+    if ((t/=d/2) < 1) return c/2*t*t*t + b;
+    return c/2*((t-=2)*t*t + 2) + b;
+  }
+    marker.setVisible(false);
+    //var count = 0;
+    var percent = 0;
+    var elapsed = 0;
+    var start = 0;
+    var end = 100;
+    var total = 4000;
+
+
+    test123 = window.setInterval(function() {
+      //count = (count + 1) % 200;
+
+      console.log(easeOutQuint(percent, elapsed, start, end, total));
+
+      var icons = line.get('icons');
+      icons[0].offset = easeOutQuint(percent, elapsed, start, end, total) + '%';
+      percent += .01;
+      elapsed += 40;
+
+      line.set('icons', icons);
+      //console.log(count);
+      if (percent >= .98){
+        window.clearInterval(test123);
+        line.setOptions({
+          icons: []
+        })
+        new google.maps.Marker({
+          position: new google.maps.LatLng(37.8717, -122.2728),
+          map: inputMap
+        });
+    }
+    
+  }, 30);
+
+
+    
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>
