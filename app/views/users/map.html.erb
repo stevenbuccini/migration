@@ -5,15 +5,19 @@
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
       #map-canvas { height: 100% }
+      body {
+      	font-family: Arial;
+      }
       .friend {
       	font-size: 20px;
-      	font-family: Arial;
-      	padding: 5px;
-      	line-height: 50px;
+      	margin: 5px; /* This margin collapses! */
+      	display: block; /*takes up the entire container*/
+      	line-height: 80px; /* set to height of picture, centers text vertically in div. Only works for one line of text */
+      	height: 80px; /* set to the height of the picture, prevents weird alignment of divs */
       }
 
       .friend img {
-      	padding-right: 10px;
+      	margin-right: 10px;
       }
     </style>
     <script type="text/javascript"
@@ -36,13 +40,13 @@
 					mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
-        console.log("Loading the map");
-				var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions)
-				console.log("Map loaded");
-				generateMarkers(map);
+        //why can't generateMarkers() see these variables?
+        var oneWindow = new google.maps.InfoWindow(); //one window to rule them all.
+		var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions)
+		generateMarkers(map, oneWindow);
       }
 
-      function generateMarkers(inputMap) {
+      function generateMarkers(inputMap, infoWindow) {
 				
 				<% if current_user.been_checked != true %>
 					<% current_user.places %>
@@ -66,24 +70,20 @@
 								<%= friend.hometown_latitude %>, // used to be current_user.hometowns_info[each_hometown]["latitude"]
 								<%= friend.hometown_longitude %>), //Longitude
 							map: inputMap,
-							title: 'Map'
+							title: '<%=friend.hometown%>'
 						});
-						console.log("A marker should have been placed");
 
 
-						var <%= "info#{count}" %> = new google.maps.InfoWindow({
-							content: 
-							'<div class="friend"><strong><%= friend.hometown%></strong><hr/><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=80&height=80"> <%= friend.name %></div>',//used to be just friend.name
-							maxWidth: 300,
-						})
+						var <%= "info#{count}" %> = 
+							'<strong><%= friend.hometown%></strong><hr/><div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=80&height=80"> <%= friend.name %></div>';//used to be just friend.name
 
 						//Add the marker to the placedMakers hash
 						<% placedMarkers[friend.hometown] = "info#{count}"  %>
-						console.log('<%= placedMarkers[friend.hometown]%>'); //STEVEN LOOK HERE
 
 						//add DOM listener
 						google.maps.event.addListener(<%= "marker#{count}" %>, 'click', function() {
-  								<%= "info#{count}" %>.open(inputMap,<%= "marker#{count}" %>);
+  								infoWindow.setContent(<%=placedMarkers[friend.hometown]%>);
+  								infoWindow.open(inputMap, <%= "marker#{count}"%>);
 							});
 
 						//increment the counter
@@ -92,12 +92,17 @@
 					<% else %>
 					//grab the infowindow object.  Append new friends name there via the getContent() and
 					//setContent() method
+<<<<<<< HEAD
 						var temp = <%= placedMarkers[friend.hometown] %>.getContent();
 						<%= placedMarkers[friend.hometown] %>.setContent(temp+'<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=80&height=80"> <%= friend.name %></div>');
 						
 						//used to be + '<%=friend.name%>'
 
 
+=======
+						var temp = <%= placedMarkers[friend.hometown] %>;
+						<%= placedMarkers[friend.hometown] %> = temp+'<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=80&height=80"> <%= friend.name %></div>';
+>>>>>>> 54e235eb8560a73f82c48a6a1446b8ab79d2f168
 					<%end%>
 
 				<%end%>
