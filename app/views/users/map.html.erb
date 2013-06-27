@@ -64,7 +64,7 @@
 					//each marker will have a unique name attached to it.
 
 					//Is there already a marker at this hometown?
-					<% if placedMarkers[location] == nil && location.is_hometown ==true %>
+					<% if placedMarkers[location.fb_id] == nil && location.is_hometown ==true %>
 						var <%= "marker#{count}" %> = new google.maps.Marker({
 							position: new google.maps.LatLng(
 								<%= location.latitude %>, // used to be current_user.hometowns_info[each_hometown]["latitude"], then friend.hometown.latitude
@@ -75,36 +75,23 @@
 
 						//STOPPED HERE 
 
-						var <%= "info#{count}" %> = 
-							'<strong><%= location.name%></strong><hr/><div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=80&height=80"> <%= friend.name %></div>';//used to be just friend.name
+						var <%= "info#{count}"%> = '<strong><%= location.name%></strong><hr/>';
 
-						//Add the marker to the placedMakers hash
-						<% placedMarkers[friend.hometown] = "info#{count}"  %>
-
+						<% location.friends.each do |friend| %>
+							<%= "info#{count}"%> += '<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=80&height=80"> <%= friend.name %></div>';
+						<%end%>
+						<% placedMarkers[location.fb_id] = "info#{count}"; %>
 						//add DOM listener
 						google.maps.event.addListener(<%= "marker#{count}" %>, 'click', function() {
-  								infoWindow.setContent(<%=placedMarkers[friend.hometown]%>);
-  								infoWindow.open(inputMap, <%= "marker#{count}"%>);
-							});
-
-						//increment the counter
-						<% count=count+1 %>
-
-					<% else %>
-					//grab the infowindow object.  Append new friends name there via the getContent() and
-					//setContent() method
-<<<<<<< HEAD
-						var temp = <%= placedMarkers[friend.hometown] %>.getContent();
-						<%= placedMarkers[friend.hometown] %>.setContent(temp+'<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=80&height=80"> <%= friend.name %></div>');
-						
-						//used to be + '<%=friend.name%>'
-
-
-=======
-						var temp = <%= placedMarkers[friend.hometown] %>;
-						<%= placedMarkers[friend.hometown] %> = temp+'<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=80&height=80"> <%= friend.name %></div>';
->>>>>>> 54e235eb8560a73f82c48a6a1446b8ab79d2f168
+							console.log("here");
+							infoWindow.setContent(<%=placedMarkers[location.fb_id]%>);
+							console.log("here1");
+							infoWindow.open(inputMap, <%= "marker#{count}"%>);
+						});
+						<% count = count +1; %>
 					<%end%>
+
+					
 
 				<%end%>
 			
