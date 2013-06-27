@@ -48,7 +48,8 @@
 
       function generateMarkers(inputMap, infoWindow) {
 				
-				<% if current_user.been_checked != true %>
+				<% if current_user.been_checked == false %>
+					console.log("errrr99");
 					<% current_user.places %>
 				<%end%>
 				//instantiate a counter variable
@@ -59,7 +60,7 @@
 				<% placedMarkers = {} %>
 
 				<%current_user.locations.each do |location| %>
-					console.log("We're about to load a marker");
+					// console.log("We're about to load a marker");
 					//Create a new marker on each loop, place on the map.
 					//each marker will have a unique name attached to it.
 
