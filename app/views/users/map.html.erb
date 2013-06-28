@@ -48,8 +48,8 @@
 
       function generateMarkers(inputMap, infoWindow) {
 				
-				<% if current_user.been_checked == false %>
-					console.log("errrr99");
+				<% if current_user.been_checked != true %>
+					
 					<% current_user.places %>
 				<%end%>
 				//instantiate a counter variable
