@@ -5,8 +5,6 @@
 	<%stylesheet_link_tag "bootstrap.min" %>
 <% end %>
 
-
-    
     <style>
 
     /* GLOBAL STYLES
@@ -19,7 +17,16 @@
     }
 
 
-
+    .overlay{
+    opacity:0.2;
+    background-color:#ffffff;
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index:100;
+}
     /* CUSTOMIZE THE NAVBAR
     -------------------------------------------------- */
 
@@ -104,13 +111,14 @@
       position: static;
       max-width: 550px;
       padding: 0 20px;
-      margin-top: 200px;
+      margin-top: 240px;
+      margin-left: 110px;
     }
     .carousel-caption h1,
     .carousel-caption .lead {
       margin: 0;
       line-height: 1.25;
-      color: #fff;
+      color: #000000;
       text-shadow: 0 1px 1px rgba(0,0,0,.4);
     }
     .carousel-caption .btn {
@@ -255,25 +263,15 @@
       <script src="../assets/js/html5shiv.js"></script>
     <![endif]-->
 
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="http://twitter.github.io/bootstrap/assets/ico/favicon.png">
-  <style type="text/css"></style><style type="text/css"></style><style id="holderjs-style" type="text/css">.holderjs-fluid {font-size:16px;font-weight:bold;text-align:center;font-family:sans-serif;margin:0}</style></head>
-
-  <body>
 
 
 
-    <!-- NAVBAR
-    ================================================== -->
-    <div class="navbar-wrapper">
+
+<div class="navbar-wrapper">
       <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
       <div class="container">
 
-        <div class="navbar" >
+        <div class="navbar">
           <div class="navbar-inner">
             <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -281,25 +279,16 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="./carousel_files/carousel.html">Migration</a>
+            <a class="brand" href="/">Migration</a>
             <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
             <div class="nav-collapse collapse">
               <ul class="nav">
-                <li class="active"><a href="./carousel_files/carousel.html">Home</a></li>
-                <li><a href="http://twitter.github.io/bootstrap/examples/carousel.html#about">About</a></li>
-                <li><a href="http://twitter.github.io/bootstrap/examples/carousel.html#contact">Contact</a></li>
-                <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
-                <li class="dropdown">
-                  <a href="./carousel_files/carousel.html" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="./carousel_files/carousel.html">Action</a></li>
-                    <li><a href="./carousel_files/carousel.html">Another action</a></li>
-                    <li><a href="./carousel_files/carousel.html">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li class="nav-header">Nav header</li>
-                    <li><a href="./carousel_files/carousel.html">Separated link</a></li>
-                    <li><a href="./carousel_files/carousel.html">One more separated link</a></li>
-                  </ul>
+                <li class="active"><a href="/">Home</a></li>
+              <li><%= link_to "About", 'http://www.google.com'%></li>
+              <li><%= link_to "Contact", 'http://www.google.com'%></li>
+              <li><%= link_to "Github", 'http://www.google.com'%></li>
+              
+                
                 </li>
               </ul>
             </div><!--/.nav-collapse -->
@@ -320,9 +309,9 @@
           <img src="/assets/map_image.png">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Introducing Migration</h1>
-              <p class="lead" style="color:black">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="./carousel_files/carousel.html">Sign up today</a>
+              <h1>Migration</h1>
+              <p class="lead" >Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <a class="btn btn-large btn-primary" href="/auth/facebook">Sign up today</a>
             </div>
           </div>
         </div>
@@ -330,25 +319,25 @@
          <img src="/assets/map_image.png">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Introducing migration</h1>
-              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="./carousel_files/carousel.html">Learn more</a>
+              <h1>Migration</h1>
+              <p class="lead">Engage with your friends like never before.</p>
+              <a class="btn btn-large btn-primary" href="/auth/facebook">Sign in with Facebook</a>
             </div>
           </div>
         </div>
         <div class="item">
-          <img src="./carousel_files/slide-03.jpg" alt="">
+          <img src="/assets/map_image.png" >
           <div class="container">
             <div class="carousel-caption">
               <h1>One more for good measure.</h1>
               <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="./carousel_files/carousel.html">Browse gallery</a>
+              <a class="btn btn-large btn-primary" href="/auth/facebook">Browse gallery</a>
             </div>
           </div>
         </div>
       </div>
-      <a class="left carousel-control" href="http://twitter.github.io/bootstrap/examples/carousel.html#myCarousel" data-slide="prev">‹</a>
-      <a class="right carousel-control" href="http://twitter.github.io/bootstrap/examples/carousel.html#myCarousel" data-slide="next">›</a>
+      <!-- <a class="left carousel-control" href="http://twitter.github.io/bootstrap/examples/carousel.html#myCarousel" data-slide="prev">‹</a>
+      <a class="right carousel-control" href="http://twitter.github.io/bootstrap/examples/carousel.html#myCarousel" data-slide="next">›</a> -->
     </div><!-- /.carousel -->
 
 
@@ -362,6 +351,9 @@
       <% if current_user %>
     Signed in as <strong><%= current_user.name %></strong> that looks like <img src=<%=current_user.image%>> !
 
+    <a class="btn btn-large btn-primary" href="/example" id="go">Generate map</a>
+
+    <a class="btn btn-large btn-primary" id="got"> map</a>
     <%= link_to "Sign out", signout_path, id: "sign_out" %>
   <% else %>
     <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
@@ -370,23 +362,23 @@
     	<div class="featurette">
         <img class="featurette-image pull-right" src="assets/happy_coding.jpg" style="max-height: 500px; max-width: 500px;">
         <h2 class="featurette-heading">Ruby on Rails. <span class="muted">All the cool kids are doing it.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <p class="lead">All users, sessions, authentication and data collection is done efficiently and effectively in Rails. Thanks to the Active Record's Object Relational Mapping (ORM), database control has never been easier. </p>
       </div>
 
       <hr class="featurette-divider">
 
       <div class="featurette">
-        <img class="featurette-image pull-left" src="./carousel_files/browser-icon-firefox.png">
-        <h2 class="featurette-heading">Facebook Graph API Manipulation. <span class="muted">See for yourself.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <img class="featurette-image pull-left" src="/assets/fb-graph.jpg" style="max-height: 500px; max-width: 500px;">
+        <h2 class="featurette-heading">Facebook Graph API. <span class="muted">Maximizing the potential.</span></h2>
+        <p class="lead">Facebook's Graph API gives developers access to information that can significantly enhance a user's experience. Migration takes your friends' hometowns and current locations to obtain a streamlined package of information. </p>
       </div>
 
       <hr class="featurette-divider">
 
       <div class="featurette">
         <img class="featurette-image pull-right" src="/assets/google-Maps.png">
-        <h2 class="featurette-heading">Deep Google Maps Integration. <span class="muted">Something Witty.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <h2 class="featurette-heading">Deep Google Maps Integration: <span class="muted">Bringing you a map worth bragging about.</span></h2>
+        <p class="lead">After the data is acquired, it is presented to the user in a polished, streamlined package with the Google Maps API.</p>
       </div>
 
       <hr class="featurette-divider">
@@ -394,16 +386,20 @@
       <!-- Three columns of text below the carousel -->
       <div class="row">
         <div class="span6">
-          <img class="img-circle" data-src="holder.js/140x140" alt="140x140" style="width: 140px; height: 140px;" src="data:image/png;base64,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">
+          <img class="img-circle" data-src="holder.js/140x140" alt="140x140" style="width: 140px; height: 140px;" src="assets/alex.png">
           <h2>Alex Triana</h2>
-          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-          <p><a class="btn" href="./carousel_files/carousel.html">View details »</a></p>
+          <p>B.S. Electrical Engineering and Computer Science 2016<p>
+        <p>University of California, Berkeley</p>
+        <p> Alex is passionate about web development and the Ruby on Rails Web platform. Previously an intern at Qualcomm, he is spending this summer doing Computer Science research at Cal. </p>
+          <p><a class="btn" href="www.alextriana.com">Personal Site »</a></p>
         </div><!-- /.span4 -->
         <div class="span6">
-          <img class="img-circle" data-src="holder.js/140x140" alt="140x140" style="width: 140px; height: 140px;" src="data:image/png;base64,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">
+          <img class="img-circle" data-src="holder.js/140x140" alt="140x140" style="width: 140px; height: 140px;" src="/assets/steven.jpeg">
           <h2>Steven Buccini</h2>
-          <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn" href="./carousel_files/carousel.html">View details »</a></p>
+          <p>B.S. Electrical Engineering and Computer Science 2016<p>
+        <p>University of California, Berkeley</p>
+          <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+          <p><a class="btn" href="http://www.stevenbuccini.com">Personal Site »</a></p>
         </div><!-- /.span4 -->
        
         </div><!-- /.span4 -->
@@ -421,8 +417,8 @@
 
       <!-- FOOTER -->
       <footer>
-        <p class="pull-right"><a href="./carousel_files/carousel.html">Back to top</a></p>
-        <p>© 2013 Company, Inc. · <a href="./carousel_files/carousel.html">Privacy</a> · <a href="./carousel_files/carousel.html">Terms</a></p>
+       
+        <p>© 2013 Alex Triana and Steven Buccini
       </footer>
 
     </div><!-- /.container -->
@@ -432,28 +428,27 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./carousel_files/jquery.js"></script>
-    <script src="./carousel_files/bootstrap-transition.js"></script>
-    <script src="./carousel_files/bootstrap-alert.js"></script>
-    <script src="./carousel_files/bootstrap-modal.js"></script>
-    <script src="./carousel_files/bootstrap-dropdown.js"></script>
-    <script src="./carousel_files/bootstrap-scrollspy.js"></script>
-    <script src="./carousel_files/bootstrap-tab.js"></script>
-    <script src="./carousel_files/bootstrap-tooltip.js"></script>
-    <script src="./carousel_files/bootstrap-popover.js"></script>
-    <script src="./carousel_files/bootstrap-button.js"></script>
-    <script src="./carousel_files/bootstrap-collapse.js"></script>
-    <script src="./carousel_files/bootstrap-carousel.js"></script>
-    <script src="./carousel_files/bootstrap-typeahead.js"></script>
-    <script>
-      !function ($) {
-        $(function(){
-          // carousel demo
-          $('#myCarousel').carousel()
-        })
-      }(window.jQuery)
-    </script>
-    <script src="./carousel_files/holder.js"></script>
-  
+    
 
-</body></html>
+
+     <script>$(document).ready(function(){  
+
+    $("#got").click(function () {
+        $('body').addClass('overlay');
+        $('body').addClass('progress progress-striped');
+        $('progress progress-striped').css('z-index',200);
+        
+    });
+
+
+    // !function ($) {
+    //     $(function(){
+    //       // carousel demo
+    //       $('#myCarousel').carousel()
+    //     })
+    //   }(window.jQuery)
+});
+
+</script>
+    
+  
