@@ -48,7 +48,7 @@
 
       function generateMarkers(inputMap, infoWindow) {
 				
-				<% if current_user.been_checked == false %>
+				<% if current_user.been_checked != true %>
 					console.log("errrr99");
 					<% current_user.places %>
 				<%end%>
