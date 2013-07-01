@@ -434,11 +434,14 @@
      <script>$(document).ready(function(){  
 
     $("#got").click(function () {
-        $('body').addClass('overlay');
         
-        var newdiv1 = $('<div class="progress progress-striped"/>');
-        $('body').append(newdiv1);
-        $('progress progress-striped').css('z-index',200);
+
+        var newdiv1 = $('<div class="progress progress-striped active span8 offset4" id="new" style="z-index:999; top:500px"/>');
+        $('body').prepend(newdiv1);
+         $('body').addClass('overlay');
+    
+        $('#new').append($('<div class="bar" style="width: 100%;z-index:999" />'));
+        
         
     });
 
