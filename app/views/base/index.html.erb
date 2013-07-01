@@ -435,7 +435,9 @@
 
     $("#got").click(function () {
         $('body').addClass('overlay');
-        $('body').addClass('progress progress-striped');
+        
+        var newdiv1 = $('<div class="progress progress-striped"/>');
+        $('body').append(newdiv1);
         $('progress progress-striped').css('z-index',200);
         
     });
