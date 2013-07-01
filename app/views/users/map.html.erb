@@ -79,7 +79,7 @@
 						var <%= "info#{count}"%> = '<strong><%= location.name%></strong><hr/>';
 
 						<% location.friends.each do |friend| %>
-							<%= "info#{count}"%> += '<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.image%>/picture?width=80&height=80"> <%= friend.name %></div>';
+							<%= "info#{count}"%> += '<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.fb_userid%>/picture?width=80&height=80"> <%= friend.name %></div>';
 						<%end%>
 						<% placedMarkers[location.fb_id] = "info#{count}"; %>
 						//add DOM listener
