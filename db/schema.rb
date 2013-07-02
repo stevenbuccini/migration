@@ -11,16 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130701060444) do
+ActiveRecord::Schema.define(:version => 20130702064010) do
 
-  create_table "friends", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.integer  "user_id"
-    t.integer  "location_id"
-    t.string   "fb_userid"
-  end
+# Could not dump table "friends" because of following StandardError
+#   Unknown type 'array' for column 'hometown'
 
   create_table "locations", :force => true do |t|
     t.string   "name"
@@ -45,7 +39,6 @@ ActiveRecord::Schema.define(:version => 20130701060444) do
     t.string   "location"
     t.string   "image"
     t.boolean  "been_checked"
-    t.integer  "location_id"
   end
 
 end

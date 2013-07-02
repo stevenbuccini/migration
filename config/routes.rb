@@ -12,6 +12,9 @@ Iceman::Application.routes.draw do
   resources :users
 
   match 'example', to: 'users#map'
+  match 'about', to: 'base#about', as: 'about'
+  match 'contact', to: 'base#contact', as: 'contact'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

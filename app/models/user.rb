@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
           hometown_objects[each[0]]=each[0]
        end
       Location.where(fb_id: each[0]).first.friends.new(:name => each[2]["name"],
-      :fb_userid => each[2]["id"]).save
+      :fb_userid => each[2]["id"], :hometown => each[2]["hometown"]["id"]).save
     end
 
     master_current_locations=locs.zip(locationnames,friends)
@@ -88,8 +88,10 @@ class User < ActiveRecord::Base
           :is_hometown => false).save
           location_objects[each[0]]=each[0]
        end
-       Location.where(:fb_id => each[0],:is_hometown => false).first.friends.new(:name => each[2]["name"],
-       :fb_userid => each[2]["id"]).save
+       current_friend_id=each[2]["id"]
+       Location.where(fb_id:  each[0]).first.friends.push(Friend.where(fb_userid: current_friend_id)).save
+       Friend.where(fb_userid:  current_friend_id).current_location=each[2]["location"]["id"]
+
     end
 
 
