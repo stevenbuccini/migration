@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130702064010) do
+ActiveRecord::Schema.define(:version => 20130702071148) do
 
 # Could not dump table "friends" because of following StandardError
 #   Unknown type 'array' for column 'hometown'
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20130702064010) do
     t.boolean  "is_hometown"
     t.integer  "user_id"
     t.string   "fb_id"
+    t.integer  "location_id"
   end
 
   create_table "users", :force => true do |t|
