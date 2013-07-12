@@ -104,7 +104,15 @@
 						<% location.friends.each do |friend| %>
 							<%= "info#{count}"%> += '<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.fb_userid%>/picture?width=80&height=80"> <%= friend.name %></div>';
 						<%end%>
+
+						
+						<% elsif location.is_hometown == true%>
+
+
 						<% infoWindows[location.fb_id] = "info#{count}"; %>
+
+
+
 						//add DOM listener
 						google.maps.event.addListener(<%= "marker#{count}" %>, 'click', function() {
 							console.log("here");
@@ -114,10 +122,8 @@
 						});
 						<% count = count +1; %>
 					<%end%>
-
-					
-
 				<%end%>
+
 			
 
 			}
