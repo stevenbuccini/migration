@@ -24,7 +24,13 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuDVr4-db36hkcu4EKdCLOdOK5yikibAs&sensor=false">
     </script>
     <script type="text/javascript">
-      function initialize() {
+    //Instantiate Global Variables to give functions access to them.
+    var oneWindow; //one window to rule them all.
+    var map;
+    var placedMarkers = [] //This holds all of our markers, so we can clear them when necessary.
+    var lineSymbol;
+    var test123;
+    function initialize() {
         var mapOptions = {
           center: new google.maps.LatLng(39.828175,-98.5795),
 					zoom: 4,
@@ -39,14 +45,31 @@
 					maxZoom: 10,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
         };
+        //We can reuse this symbol for every Polyline
+      	lineSymbol = {
+		    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+		    scale: 3,
+		    strokeColor: '#393',
+		    fillColor: '#393',
+		    fillOpacity: 1,
+		    strokeOpacity: 1
+	  	};
+        oneWindow = new google.maps.InfoWindow(); 
+	    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions)
+		generateMarkers();
+		
+		/* uncomment this line to see the lines after 5 seconds
+		window.setTimeout(function(){
+		    clearMarkers();
+		    animate();
+		 	}, 5000);
+		*/
 
-        //why can't generateMarkers() see these variables?
-        var oneWindow = new google.maps.InfoWindow(); //one window to rule them all.
-		var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions)
-		generateMarkers(map, oneWindow);
+		
+
       }
 
-      function generateMarkers(inputMap, infoWindow) {
+      function generateMarkers() {
 				
 				<% if current_user.been_checked != true %>
 					<% current_user.places %>
@@ -56,7 +79,8 @@
 
 				//instantiate an empty hash to store hometown=>Marker pairings
 				//Should we store LatLong instead of hometowns?
-				<% placedMarkers = {} %>
+				<% infoWindows = {} %>
+
 
 				<%current_user.locations.each do |location| %>
 					// console.log("We're about to load a marker");
@@ -64,29 +88,29 @@
 					//each marker will have a unique name attached to it.
 
 					//Is there already a marker at this hometown?
-					<% if placedMarkers[location.fb_id] == nil && location.is_hometown ==true %>
+					<% if infoWindows[location.fb_id] == nil && location.is_hometown ==true %>
 						var <%= "marker#{count}" %> = new google.maps.Marker({
 							position: new google.maps.LatLng(
 								<%= location.latitude %>, // used to be current_user.hometowns_info[each_hometown]["latitude"], then friend.hometown.latitude
 								<%= location.longitude %>), //Longitude
-							map: inputMap,
+							map: map,
 							title: '<%=location.name%>'
 						});
 
-						//STOPPED HERE 
+						placedMarkers.push(<%= "marker#{count}" %>);
 
 						var <%= "info#{count}"%> = '<strong><%= location.name%></strong><hr/>';
 
 						<% location.friends.each do |friend| %>
 							<%= "info#{count}"%> += '<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.fb_userid%>/picture?width=80&height=80"> <%= friend.name %></div>';
 						<%end%>
-						<% placedMarkers[location.fb_id] = "info#{count}"; %>
+						<% infoWindows[location.fb_id] = "info#{count}"; %>
 						//add DOM listener
 						google.maps.event.addListener(<%= "marker#{count}" %>, 'click', function() {
 							console.log("here");
-							infoWindow.setContent(<%=placedMarkers[location.fb_id]%>);
+							oneWindow.setContent(<%=infoWindows[location.fb_id]%>);
 							console.log("here1");
-							infoWindow.open(inputMap, <%= "marker#{count}"%>);
+							oneWindow.open(map, <%= "marker#{count}"%>);
 						});
 						<% count = count +1; %>
 					<%end%>
@@ -97,6 +121,114 @@
 			
 
 			}
+
+
+		function clearMarkers() {
+			for (var i=0; i < placedMarkers.length; i++){
+				//placedMarkers[i].setMap(null);
+				placedMarkers[i].setVisible(false);
+			}
+			//placedMarkers = [];
+		}
+
+		function animate(){
+			console.log("animating");
+			//for the easing function
+			var percent = 0;
+		    var elapsed = 0;
+		    var start = 0;
+		    var end = 100;
+		    var total = 4000; //time it takes to complete the function, in milliseconds
+
+		    
+		    var lines = [];
+		    <% counter = 0 %>
+			<%current_user.locations.each do |location| %>
+				<%location.friends.each do |friend| %>
+					//console.log("making line" + counter);
+					//console.log(<%= counter%>);
+					//console.log('<%= "line#{counter}" %>');
+					console.log('<%= Location.find_by_fb_id(friend.hometown).latitude%>');
+					<% hometown = Location.find_by_fb_id(friend.hometown) %>
+					<% current_location =Location.find_by_fb_id(friend.current_location)%>
+					<% if (hometown.latitude != current_location.latitude) && (hometown.longitude != current_location.longitude)%>
+						var <%= "line#{counter}" %> = new google.maps.Polyline({
+							    path: [
+							    	new google.maps.LatLng(<%=hometown.latitude%>, <%=hometown.longitude%>),
+							    	new google.maps.LatLng(<%=current_location.latitude%>, <%=current_location.longitude%>)
+							    	//new google.maps.LatLng(37.8717, -122.2728)
+							    	],
+							    icons: [{
+							      icon: lineSymbol,
+							      offset: '0%'
+							    }],
+							    geodesic: true,
+							    map: map,
+							    strokeWeight: 2,
+							    //strokeOpacity: 0
+							  });
+						lines.push(<%= "line#{counter}" %>)
+						//console.log(<%= "line#{counter}" %>);
+
+						<% counter = counter + 1 %>
+					<%end%>
+				<%end%>
+			<%end%>
+
+			
+			//console.log(lines)
+			
+			test123 = window.setInterval(function() { 
+				console.log("moving markers");
+				/*
+				for(var i=0; i < lines.length; i++) {
+					var icons = lines[i].get('icons');
+				    icons[0].offset = easeOutQuint(percent, elapsed, start, end, total) + '%';
+				    percent += .01;
+				    elapsed += 40;
+				    line.set('icons', icons);
+
+				    if (percent >= 1){
+				        window.clearInterval(test123);
+				        line.setOptions({
+				          icons: []
+				        });
+				    }
+				}
+				*/
+
+				var icons = lines[0].get('icons');
+			    icons[0].offset = easeOutQuint(percent, elapsed, start, end, total) + '%';
+			    percent += .01;
+			    elapsed += 40;
+
+			    lines[0].set('icons', icons);
+			      //console.log(count);
+			     
+		        if (percent >= 1){
+			        window.clearInterval(test123);
+			        lines[0].setOptions({
+			          icons: []
+				        })
+			        new google.maps.Marker({
+			          position: new google.maps.LatLng(37.8717, -122.2728),
+			          map: map
+			        });
+
+			        lines[0].setOptions({strokeOpacity: 0});
+			    }
+			    
+			}, 30);		
+
+
+
+		}
+
+		//EaseOutQuint
+	    function easeOutQuint(x, t, b, c, d){
+		    if ((t/=d/2) < 1) return c/2*t*t*t + b;
+		    return c/2*((t-=2)*t*t + 2) + b;
+	  	}
 
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
