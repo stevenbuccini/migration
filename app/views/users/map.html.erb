@@ -88,7 +88,7 @@
 					//each marker will have a unique name attached to it.
 
 					//Is there already a marker at this hometown?
-					<% if infoWindows[location.fb_id] == nil && location.is_hometown ==true %>
+					<% if infoWindows[location.fb_id] == nil && location.is_hometown %>
 						var <%= "marker#{count}" %> = new google.maps.Marker({
 							position: new google.maps.LatLng(
 								<%= location.latitude %>, // used to be current_user.hometowns_info[each_hometown]["latitude"], then friend.hometown.latitude
@@ -102,22 +102,15 @@
 						var <%= "info#{count}"%> = '<strong><%= location.name%></strong><hr/>';
 
 						<% location.friends.each do |friend| %>
+							<% current_location = Location.find_by_fb_id(friend.current_location) %>
 							<%= "info#{count}"%> += '<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.fb_userid%>/picture?width=80&height=80"> <%= friend.name %></div>';
 						<%end%>
 
-						
-						<% elsif location.is_hometown == true%>
-
-
 						<% infoWindows[location.fb_id] = "info#{count}"; %>
-
-
 
 						//add DOM listener
 						google.maps.event.addListener(<%= "marker#{count}" %>, 'click', function() {
-							console.log("here");
 							oneWindow.setContent(<%=infoWindows[location.fb_id]%>);
-							console.log("here1");
 							oneWindow.open(map, <%= "marker#{count}"%>);
 						});
 						<% count = count +1; %>
