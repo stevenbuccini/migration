@@ -23,14 +23,11 @@ class User < ActiveRecord::Base
 
 
   def places
-
-
     
   	# all_friends_basic_info.last = "100006342546506"=>{"id"=>"100006342546506", "name"=>"Summerset Thompson", 
     # "first_name"=>"Summerset", "last_name"=>"Thompson", "link"=>"https://www.facebook.com/summerset.thompson.1",
     # "username"=>"summerset.thompson.1", "hometown"=>{"id"=>"110714572282163", "name"=>"San Diego, California"}, 
     # "gender"=>"female", "locale"=>"en_US", "updated_time"=>"2013-07-14T03:11:49+0000"}}]
-
 
   	all_friends_basic_info = get_friends_basic_information()
 
@@ -42,11 +39,6 @@ class User < ActiveRecord::Base
 
     make_locations_and_friend_subarrays(b,locs,locationnames,friends)
 
-
-    
-    
-
-
     self.been_checked = true
     self.save
  
@@ -55,7 +47,7 @@ class User < ActiveRecord::Base
   end
 
   
-
+private
   def get_friends_basic_information
 
     all_friends_basic_info = facebook.batch do |batch_api|
