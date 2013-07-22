@@ -58,13 +58,14 @@
 	    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions)
 		generateMarkers();
 		
-		/* uncomment this line to see the lines after 5 seconds
+		// uncomment this line to see the lines after 5 seconds
+
+
 		window.setTimeout(function(){
 		    clearMarkers();
 		    animate();
 		 	}, 5000);
-		*/
-
+		
 		
 
       }
@@ -102,7 +103,6 @@
 						var <%= "info#{count}"%> = '<strong><%= location.name%></strong><hr/>';
 
 						<% location.friends.each do |friend| %>
-							<% current_location = Location.find_by_fb_id(friend.current_location) %>
 							<%= "info#{count}"%> += '<div class="friend"><IMG BORDER="0" ALIGN="Left" SRC="http://graph.facebook.com/<%=friend.fb_userid%>/picture?width=80&height=80"> <%= friend.name %></div>';
 						<%end%>
 
@@ -147,7 +147,7 @@
 					//console.log("making line" + counter);
 					//console.log(<%= counter%>);
 					//console.log('<%= "line#{counter}" %>');
-					console.log('<%= Location.find_by_fb_id(friend.hometown).latitude%>');
+					//console.log('<%= Location.find_by_fb_id(friend.hometown).latitude%>');
 					<% hometown = Location.find_by_fb_id(friend.hometown) %>
 					<% current_location =Location.find_by_fb_id(friend.current_location)%>
 					<% if (hometown.latitude != current_location.latitude) && (hometown.longitude != current_location.longitude)%>
@@ -163,8 +163,8 @@
 							    }],
 							    geodesic: true,
 							    map: map,
-							    strokeWeight: 2,
-							    //strokeOpacity: 0
+							    strokeWeight: .25,
+							    //strokeOpacity: 0  //uncomment to turn lines off
 							  });
 						lines.push(<%= "line#{counter}" %>)
 						//console.log(<%= "line#{counter}" %>);
@@ -175,29 +175,37 @@
 			<%end%>
 
 			
-			//console.log(lines)
+			console.log(lines)
 			
 			test123 = window.setInterval(function() { 
-				console.log("moving markers");
-				/*
+				//console.log("moving markers");
+
+				
+				
+				var offset = easeOutQuint(percent, elapsed, start, end, total) + '%';
 				for(var i=0; i < lines.length; i++) {
+					//console.log("editing line " + i);
 					var icons = lines[i].get('icons');
-				    icons[0].offset = easeOutQuint(percent, elapsed, start, end, total) + '%';
-				    percent += .01;
-				    elapsed += 40;
-				    line.set('icons', icons);
-
-				    if (percent >= 1){
-				        window.clearInterval(test123);
-				        line.setOptions({
-				          icons: []
-				        });
-				    }
+				    icons[0].offset = offset;
+				    lines[i].set('icons', icons);
 				}
-				*/
+				percent += .01;
+		    	elapsed += 40;
 
+				if(percent >= 1){
+					window.clearInterval(test123);
+				}
+					
+		        //window.clearInterval(test123);
+		        
+				
+			
+				/*
 				var icons = lines[0].get('icons');
-			    icons[0].offset = easeOutQuint(percent, elapsed, start, end, total) + '%';
+				var tempoffset = easeOutQuint(percent, elapsed, start, end, total) + '%'
+			    icons[0].offset = tempoffset;
+			    console.log(percent);
+			    console.log(tempoffset);
 			    percent += .01;
 			    elapsed += 40;
 
@@ -216,6 +224,7 @@
 
 			        lines[0].setOptions({strokeOpacity: 0});
 			    }
+			    */
 			    
 			}, 30);		
 
