@@ -471,7 +471,7 @@ function unloadPopupBox() { // TO Unload the Popupbox
        var h = $('<div class="popup_box" id="popup_box"/>')
        var newdiv2 = $('<div class="contianer" id="popup_box_container" />');
        var newdiv1 = $('<div class="progress progress-striped active span6" id="newdiv1"/>');
-       var newdiv3 = $(' <div class="bar" style="width: 100%"></div>');
+       var newdiv3 = $(' <div class="bar" id="filler" style="width: 0%"></div>');
        var newdiv4 = $('<h1 id = "text" style="position:center;"></h1>');
 
       $('#outter').prepend(h);
@@ -491,7 +491,7 @@ function unloadPopupBox() { // TO Unload the Popupbox
       $('#popup_box').fadeIn("slow");
       $("#butt").css({ // this is just for style
         "opacity": "0.3"  });
-
+      var current_width=0;
      function nextMsg() {
     if (updates.length == 0) {
         // once there is no more message, do whatever you want
@@ -501,6 +501,8 @@ function unloadPopupBox() { // TO Unload the Popupbox
         console.log('hit');
         var current = updates.pop();
         console.log(current);
+        current_width=current_width+20
+        $('#filler').css({"width":String(current_width)+"%"})
         $('#text').hide().html(current).fadeIn(1000).delay(1000).fadeOut(1000,nextMsg);
         //.delay(3000).fadeOut(200) nextMsg(updates))
     }
