@@ -17,15 +17,28 @@
     }
 
 
-    .overlay{
-    opacity:0.2;
-    background-color:#ffffff;
-    position:fixed;
-    width:100%;
-    height:100%;
-    top:0px;
-    left:0px;
-    z-index:100;
+
+
+#popup_box { 
+  display:none; /* Hide the DIV */
+  position:fixed;  
+  _position:absolute; /* hack for internet explorer 6 */  
+  height:125px;  
+  width:500px;  
+  background:#FFFFFF;  
+  left: 300px;
+  top: 150px;
+  z-index:50; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+  margin-left: 15px;  
+  
+  /* additional features, can be omitted */
+  border:2px solid #cccccc;   
+  padding:15px;  
+  font-size:15px;  
+  -moz-box-shadow: 0 0 5px #cccccc;
+  -webkit-box-shadow: 0 0 5px #cccccc;
+  box-shadow: 0 0 5px #cccccc;
+  
 }
     /* CUSTOMIZE THE NAVBAR
     -------------------------------------------------- */
@@ -265,8 +278,9 @@
 
 
 
+<div id="outter">
 
-
+<div id="butt"/>
 <div class="navbar-wrapper">
       <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
       <div class="container">
@@ -422,8 +436,10 @@
       </footer>
 
     </div><!-- /.container -->
-
-
+<div class="progress progress-striped active span6" id="newdiv1"/>
+ <div class="bar" style="width: 100%"></div>
+</div>
+</div>
 
     <!-- Le javascript
     ================================================== -->
@@ -436,24 +452,77 @@
     $("#got").click(function () {
         
 
-        var newdiv1 = $('<div class="progress progress-striped active span8 offset5" id="new" style="z-index:999; top:500px"/>');
-        $('body').prepend(newdiv1);
-         // $('body').addClass('overlay');
-    
-        $('#new').append($('<div class="bar" style="width: 100%;z-index:999" />'));
-        $('#new').append($('<p> Gathering Facebook data... one moment please</p>'));
-        
+        loadPopupBox();
         
     });
 
 
-    // !function ($) {
-    //     $(function(){
-    //       // carousel demo
-    //       $('#myCarousel').carousel()
-    //     })
-    //   }(window.jQuery)
+
+
+function unloadPopupBox() { // TO Unload the Popupbox
+      $('#popup_box').fadeOut("slow");
+      $("#container").css({ // this is just for style   
+        "opacity": "1"  
+      }); 
+    }
+
+    
+    function loadPopupBox() { // To Load the Popupbox
+       var h = $('<div class="popup_box" id="popup_box"/>')
+       var newdiv2 = $('<div class="contianer" id="popup_box_container"/>');
+       var newdiv1 = $('<div class="progress progress-striped active span6" id="newdiv1"/>');
+       var newdiv3 = $(' <div class="bar" style="width: 100%"></div>');
+       var newdiv4 = $('<h1 id = "text"></h1>');
+
+      $('#outter').prepend(h);
+      $('#popup_box').append(newdiv2);
+
+      $('#popup_box_container').append(newdiv1)
+      $('#newdiv1').append(newdiv3);
+       $("#popup_box_container").append("<br></br>");
+       $("#popup_box_container").append(newdiv4);
+
+
+      //$("#popup_box_container").append("<h1>Checking all friends...</h1>");
+      //Finding friends with sufficient data...
+      //Generating map...
+      //Generating markers...
+      //Almost done!
+      $('#popup_box').fadeIn("slow");
+      $("#butt").css({ // this is just for style
+        "opacity": "0.3"  });
+
+     function nextMsg() {
+    if (updates.length == 0) {
+        // once there is no more message, do whatever you want
+        console.log("done");
+    } else {
+        // change content of message, fade in, wait, fade out and continue with next message
+        console.log('hit');
+        var current = updates.pop();
+        console.log(current);
+        $('#text').hide().html(current).fadeIn(2000).delay(500).fadeOut(200,nextMsg);
+        //.delay(3000).fadeOut(200) nextMsg(updates))
+    }
+  }   
+    
+
+    var updates = [
+    "Almost done!",
+    "Generating markers...",
+    
+    "Generating map...",
+    "Gathering all data...",
+    "Checking all friends..."
+    ];
+
+    nextMsg(); 
+  }
+
+  
+
 });
+
 
 </script>
     
