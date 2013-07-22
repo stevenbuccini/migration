@@ -469,10 +469,10 @@ function unloadPopupBox() { // TO Unload the Popupbox
     
     function loadPopupBox() { // To Load the Popupbox
        var h = $('<div class="popup_box" id="popup_box"/>')
-       var newdiv2 = $('<div class="contianer" id="popup_box_container"/>');
+       var newdiv2 = $('<div class="contianer" id="popup_box_container" />');
        var newdiv1 = $('<div class="progress progress-striped active span6" id="newdiv1"/>');
        var newdiv3 = $(' <div class="bar" style="width: 100%"></div>');
-       var newdiv4 = $('<h1 id = "text"></h1>');
+       var newdiv4 = $('<h1 id = "text" style="position:center;"></h1>');
 
       $('#outter').prepend(h);
       $('#popup_box').append(newdiv2);
@@ -501,7 +501,7 @@ function unloadPopupBox() { // TO Unload the Popupbox
         console.log('hit');
         var current = updates.pop();
         console.log(current);
-        $('#text').hide().html(current).fadeIn(2000).delay(500).fadeOut(200,nextMsg);
+        $('#text').hide().html(current).fadeIn(1000).delay(1000).fadeOut(1000,nextMsg);
         //.delay(3000).fadeOut(200) nextMsg(updates))
     }
   }   
