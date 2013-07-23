@@ -279,8 +279,21 @@
 
 
 <div id="outter">
+<div class="popup_box" id="popup_box">
+  <div class="contianer" id="popup_box_container">
+    <div id="loading" style="display:none">
+      <div class="progress progress-striped active span6" id="bar-base">
+        <div class="bar" id="bar-fill" style="width: 0%">
+        
+        </div>
+      </div>
+      </br>
+      <h1 id = "text" style="position:center"></h1>
+    </div>
+  </div>
+</div>
 
-<div id="butt"/>
+<div id="content"/>
 <div class="navbar-wrapper">
       <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
       <div class="container">
@@ -293,7 +306,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="/">Migration</a>
+            <a class="brand" href="/">FriendMap.me</a>
             <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
             <div class="nav-collapse collapse">
               <ul class="nav">
@@ -318,40 +331,21 @@
     ================================================== -->
     <div id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
-        <div class="item">
-          
-          <img src="/assets/test.png">
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Migration</h1>
-              <p class="lead" >Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="/auth/facebook">Sign up today</a>
-            </div>
-          </div>
-        </div>
+        
         <div class="item active">
          <img src="/assets/test1.png">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Migration</h1>
+              <h1>FriendMap.me</h1>
               <p class="lead">Engage with your friends like never before.</p>
-              <a class="btn btn-large btn-primary" href="/auth/facebook">Sign in with Facebook</a>
+              <a class="btn btn-large btn-primary" id="facebook">Sign in with Facebook</a>
             </div>
           </div>
         </div>
-        <div class="item">
-          <img src="/assets/map_image.png" >
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>One more for good measure.</h1>
-              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="/auth/facebook">Browse gallery</a>
-            </div>
-          </div>
+       
         </div>
       </div>
-      <!-- <a class="left carousel-control" href="http://twitter.github.io/bootstrap/examples/carousel.html#myCarousel" data-slide="prev">‹</a>
-      <a class="right carousel-control" href="http://twitter.github.io/bootstrap/examples/carousel.html#myCarousel" data-slide="next">›</a> -->
+  
     </div><!-- /.carousel -->
 
 
@@ -365,9 +359,8 @@
       <% if current_user %>
     Signed in as <strong><%= current_user.name %></strong> that looks like <img src=<%=current_user.image%>> !
 
-    <a class="btn btn-large btn-primary" href="/example" id="go">Generate map</a>
+    <a class="btn btn-large btn-primary"  id="got">Generate map</a>
 
-    <a class="btn btn-large btn-primary" id="got"> map</a>
     <%= link_to "Sign out", signout_path, id: "sign_out" %>
   <% else %>
     <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
@@ -384,7 +377,7 @@
       <div class="featurette">
         <img class="featurette-image pull-left" src="/assets/fb-graph.jpg" style="max-height: 500px; max-width: 500px;">
         <h2 class="featurette-heading">Facebook Graph API. <span class="muted">Maximizing the potential.</span></h2>
-        <p class="lead">Facebook's Graph API gives developers access to information that can significantly enhance a user's experience. Migration takes your friends' hometowns and current locations to obtain a streamlined package of information. </p>
+        <p class="lead">Facebook's Graph API gives developers access to information that can significantly enhance a user's experience. FriendMap.me shows a user his or her friends' hometowns and current locations in a new, interactive, and (most importantly) one of a kind experience.</p>
       </div>
 
       <hr class="featurette-divider">
@@ -404,7 +397,7 @@
           <h2>Alex Triana</h2>
           <p>B.S. Electrical Engineering and Computer Science 2016<p>
         <p>University of California, Berkeley</p>
-        <p> Alex is passionate about web development and the Ruby on Rails Web platform. Previously an intern at Qualcomm, he is spending this summer doing Computer Science research at Cal. </p>
+        <p> Alex is passionate about web development and the Ruby on Rails Web platform. Previously an intern at Qualcomm, he is spending this summer doing Computer Science research at Cal and working for <%= link_to "HouseCall", 'http://www.housecall.io'%> and <%= link_to "5PlusTherapy.", 'http://www.5plustherapy.com'%> </p>
           <p><a class="btn" href="www.alextriana.com">Personal Site »</a></p>
         </div><!-- /.span4 -->
         <div class="span6">
@@ -412,7 +405,7 @@
           <h2>Steven Buccini</h2>
           <p>B.S. Electrical Engineering and Computer Science 2016<p>
         <p>University of California, Berkeley</p>
-          <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+          <p>Steven learned exceptional manners while being raised in the South, got booksmart in the libraries of Berkeley, and is hopefully going to get street smart on the streets of NYC in the fall. If you're reading this, Hacker School people, we should talk!</p>
           <p><a class="btn" href="http://www.stevenbuccini.com">Personal Site »</a></p>
         </div><!-- /.span4 -->
        
@@ -436,9 +429,6 @@
       </footer>
 
     </div><!-- /.container -->
-<div class="progress progress-striped active span6" id="newdiv1"/>
- <div class="bar" style="width: 100%"></div>
-</div>
 </div>
 
     <!-- Le javascript
@@ -453,72 +443,61 @@
         
 
         loadPopupBox();
+        $('#loading').fadeIn();
+        var current_width=0;
+        function nextMsg() {
+    if (updates.length == 0) {
+        // once there is no more message, do whatever you want
+        console.log("done");
+    } else {
+       
+        var current = updates.pop();
+        console.log("f")
+        current_width=current_width+20
+        $('#bar-fill').css({"width":String(current_width)+"%"})
+        $('#text').hide().html(current).fadeIn(1000).delay(1000).fadeOut(1000,nextMsg);
+
+    }
+  }   
+    
+
+    var updates = [
+    "Checking all friends...",
+    "Gathering all data...",
+    "Generating map...",
+    "Generating markers...",
+    "Almost done!"
+    ].reverse();
+
+    nextMsg(); 
         
     });
 
+
+    $("#facebook").click(function () {
+
+      loadPopupBox();
+      $('#popup_box_container').append('Note: When prompted, you must allow FriendMap.me to access your friends locations and hometowns. Otherwise, the app won\'t work!</p>');
+      $('#popup_box_container').append('<div style="margin-left:150px" id="centered">');
+      $('#centered').append('<a class="btn btn-large btn-success" href="/auth/facebook" id="facebook">I understand</a>');    });
 
 
 
 function unloadPopupBox() { // TO Unload the Popupbox
       $('#popup_box').fadeOut("slow");
-      $("#container").css({ // this is just for style   
+      $("#content").css({ // this is just for style   
         "opacity": "1"  
       }); 
     }
 
     
     function loadPopupBox() { // To Load the Popupbox
-       var h = $('<div class="popup_box" id="popup_box"/>')
-       var newdiv2 = $('<div class="contianer" id="popup_box_container" />');
-       var newdiv1 = $('<div class="progress progress-striped active span6" id="newdiv1"/>');
-       var newdiv3 = $(' <div class="bar" id="filler" style="width: 0%"></div>');
-       var newdiv4 = $('<h1 id = "text" style="position:center;"></h1>');
-
-      $('#outter').prepend(h);
-      $('#popup_box').append(newdiv2);
-
-      $('#popup_box_container').append(newdiv1)
-      $('#newdiv1').append(newdiv3);
-       $("#popup_box_container").append("<br></br>");
-       $("#popup_box_container").append(newdiv4);
-
-
-      //$("#popup_box_container").append("<h1>Checking all friends...</h1>");
-      //Finding friends with sufficient data...
-      //Generating map...
-      //Generating markers...
-      //Almost done!
+  
       $('#popup_box').fadeIn("slow");
-      $("#butt").css({ // this is just for style
+      $("#content").css({ // this is just for style
         "opacity": "0.3"  });
-      var current_width=0;
-     function nextMsg() {
-    if (updates.length == 0) {
-        // once there is no more message, do whatever you want
-        console.log("done");
-    } else {
-        // change content of message, fade in, wait, fade out and continue with next message
-        console.log('hit');
-        var current = updates.pop();
-        console.log(current);
-        current_width=current_width+20
-        $('#filler').css({"width":String(current_width)+"%"})
-        $('#text').hide().html(current).fadeIn(1000).delay(1000).fadeOut(1000,nextMsg);
-        //.delay(3000).fadeOut(200) nextMsg(updates))
-    }
-  }   
-    
-
-    var updates = [
-    "Almost done!",
-    "Generating markers...",
-    
-    "Generating map...",
-    "Gathering all data...",
-    "Checking all friends..."
-    ];
-
-    nextMsg(); 
+      
+     
   }
 
   
