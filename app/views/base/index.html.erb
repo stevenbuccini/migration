@@ -359,7 +359,7 @@
       <% if current_user %>
     Signed in as <strong><%= current_user.name %></strong> that looks like <img src=<%=current_user.image%>> !
 
-    <a class="btn btn-large btn-primary"  id="got">Generate map</a>
+    <a class="btn btn-large btn-primary"  id="got" a href='/example'>Generate map</a>
 
     <%= link_to "Sign out", signout_path, id: "sign_out" %>
   <% else %>
@@ -477,9 +477,19 @@
     $("#facebook").click(function () {
 
       loadPopupBox();
-      $('#popup_box_container').append('Note: When prompted, you must allow FriendMap.me to access your friends locations and hometowns. Otherwise, the app won\'t work!</p>');
-      $('#popup_box_container').append('<div style="margin-left:150px" id="centered">');
-      $('#centered').append('<a class="btn btn-large btn-success" href="/auth/facebook" id="facebook">I understand</a>');    });
+      $('#popup_box_container').append('<p id=note>Note: When prompted, you must allow FriendMap.me to access your friends locations and hometowns. Otherwise, the app won\'t work!</p>');
+      $('#popup_box_container').append('<div style="margin-left:25px" id="centered">');
+      $('#centered').append('<a class="btn btn-large btn-success" href="/auth/facebook" id="facebook-go">I understand</a>');
+    $('#centered').append('<a class="btn btn-large btn-danger" id="facebook-no" style="margin-left:25px">No! Take me back!</a>');    
+
+    $('#facebook-no').click(function(){
+      unloadPopupBox();
+      $('#note').remove();
+      $('#centered').remove();
+      $('#facebook-no').remove();
+      $('#facebook-go').remove();
+    });
+      });
 
 
 
