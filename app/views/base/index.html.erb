@@ -1,8 +1,8 @@
 
 
 <% content_for :head do %>
-  <%stylesheet_link_tag "bootstrap" %>
-	<%stylesheet_link_tag "bootstrap.min" %>
+  <%stylesheet_link_tag 'bootstrap' %>
+	<%stylesheet_link_tag 'bootstrap.min' %>
 <% end %>
 
     <style>
@@ -98,16 +98,6 @@
       z-index: 9;
     }
 
-    .carousel-control {
-      height: 80px;
-      margin-top: 0;
-      font-size: 120px;
-      text-shadow: 0 1px 1px rgba(0,0,0,.4);
-      background-color: transparent;
-      border: 0;
-      z-index: 10;
-    }
-
     .carousel .item {
       height: 500px;
     }
@@ -144,9 +134,6 @@
     -------------------------------------------------- */
 
     /* Center align the text within the three columns below the carousel */
-    .marketing .span4 {
-      text-align: center;
-    }
     .marketing h2 {
       font-weight: normal;
     }
@@ -293,7 +280,7 @@
   </div>
 </div>
 
-<div id="content"/>
+<div id="content">
 <div class="navbar-wrapper">
       <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
       <div class="container">
@@ -311,12 +298,10 @@
             <div class="nav-collapse collapse">
               <ul class="nav">
                 <li class="active"><a href="/">Home</a></li>
-              <li><%= link_to "About", '/about'%></li>
-              <li><%= link_to "Contact", '/contact' %></li>
-              <li><%= link_to "Github", 'https://github.com/stevenbuccini/migration'%></li>
-              
-                
-                </li>
+              <li><%= link_to 'About', '/about'%></li>
+              <li><%= link_to 'Contact', '/contact' %></li>
+              <li><%= link_to 'Github', 'https://github.com/stevenbuccini/migration'%></li>
+
               </ul>
             </div><!--/.nav-collapse -->
           </div><!-- /.navbar-inner -->
@@ -398,7 +383,7 @@
           <p>B.S. Electrical Engineering and Computer Science 2016<p>
         <p>University of California, Berkeley</p>
         <p> Alex is passionate about web development and the Ruby on Rails Web platform. Previously an intern at Qualcomm, he is spending this summer doing Computer Science research at Cal and working for <%= link_to "HouseCall", 'http://www.housecall.io'%> and <%= link_to "5PlusTherapy.", 'http://www.5plustherapy.com'%> </p>
-          <p><a class="btn" href="www.alextriana.com">Personal Site »</a></p>
+          <p><a class="btn" href="http://www.alextriana.com">Personal Site »</a></p>
         </div><!-- /.span4 -->
         <div class="span6">
           <img class="img-circle" data-src="holder.js/140x140" alt="140x140" style="width: 140px; height: 140px;" src="/assets/steve.jpeg">
@@ -428,8 +413,6 @@
         <p>© 2013 Alex Triana and Steven Buccini
       </footer>
 
-    </div><!-- /.container -->
-</div>
 
     <!-- Le javascript
     ================================================== -->
@@ -516,5 +499,3 @@ function unloadPopupBox() { // TO Unload the Popupbox
 
 
 </script>
-    
-  
