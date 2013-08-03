@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   end
 
   
-private
+
   def get_friends_basic_information
 
     all_friends_basic_info = facebook.batch do |batch_api|
@@ -120,6 +120,7 @@ private
     
     master_hometowns=homes.zip(homenames,friends)
     master_hometowns.each do |each|
+      if a[each[0]] != nil
       if hometown_objects[each[0]] == nil
         self.locations.new(:name => each[1], :fb_id => each[0], 
           :latitude => a[each[0]]["latitude"], 
@@ -127,28 +128,29 @@ private
           :is_hometown => true).save
           hometown_objects[each[0]]=each[0]
        end
-      Location.where(fb_id: each[0]).first.friends.new(:name => each[2]["name"],
+      self.locations.where(fb_id: each[0]).first.friends.new(:name => each[2]["name"],
         :fb_userid => each[2]["id"], :hometown => each[2]["hometown"]["id"], :current_location => each[2]["location"]["id"]).save
     end
+  end
  end
 
  def make_locations_and_friend_subarrays(b,locs,locationnames,friends)
 
-  location_objects=Hash.new
+    location_objects=Hash.new
 
     master_current_locations=locs.zip(locationnames,friends)
     master_current_locations.each do |each|
-      if location_objects[each[0]] == nil
-        self.locations.new(:name => each[1], :fb_id => each[0], 
-          :latitude => b[each[0]]["latitude"], 
-          :longitude => b[each[0]]["longitude"],
-          :is_hometown => false).save
-          location_objects[each[0]]=each[0]
-       end
-       current_friend_id=each[2]["id"]
-       Location.where(fb_id: each[0], is_hometown: false).first.friends.new(:name => each[2]["name"],
-        :fb_userid => each[2]["id"], :hometown => each[2]["location"]["id"], :current_location => each[2]["hometown"]["id"]).save
-
+      if b[each[0]] != nil
+        if location_objects[each[0]] == nil
+          self.locations.new(:name => each[1], :fb_id => each[0], 
+            :latitude => b[each[0]]["latitude"], 
+            :longitude => b[each[0]]["longitude"],
+            :is_hometown => false).save
+            location_objects[each[0]]=each[0]
+        end
+         self.locations.where(fb_id: each[0], is_hometown: false).first.friends.new(:name => each[2]["name"],
+          :fb_userid => each[2]["id"], :hometown => each[2]["location"]["id"], :current_location => each[2]["hometown"]["id"]).save
+      end
     end
   end
   	
