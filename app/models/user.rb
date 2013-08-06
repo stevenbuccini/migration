@@ -121,13 +121,13 @@ class User < ActiveRecord::Base
     master_hometowns=homes.zip(homenames,friends)
     master_hometowns.each do |each|
       if a[each[0]] != nil
-      if hometown_objects[each[0]] == nil
-        self.locations.new(:name => each[1], :fb_id => each[0], 
-          :latitude => a[each[0]]["latitude"], 
-          :longitude => a[each[0]]["longitude"],
-          :is_hometown => true).save
-          hometown_objects[each[0]]=each[0]
-       end
+        if hometown_objects[each[0]] == nil
+          self.locations.new(:name => each[1], :fb_id => each[0], 
+            :latitude => a[each[0]]["latitude"], 
+            :longitude => a[each[0]]["longitude"],
+            :is_hometown => true).save
+            hometown_objects[each[0]]=each[0]
+         end
       self.locations.where(fb_id: each[0]).first.friends.new(:name => each[2]["name"],
         :fb_userid => each[2]["id"], :hometown => each[2]["hometown"]["id"], :current_location => each[2]["location"]["id"]).save
     end

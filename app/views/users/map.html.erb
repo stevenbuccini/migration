@@ -261,7 +261,7 @@
 					//console.log('<%= Location.find_by_fb_id(friend.hometown).latitude%>');
 					<% hometown = Location.find_by_fb_id(friend.hometown) %>
 					<% current_location =Location.find_by_fb_id(friend.current_location)%>
-					<% if (hometown.latitude != current_location.latitude) && (hometown.longitude != current_location.longitude)%>
+					<% if (hometown != nil ) && (current_location != nil) (hometown.latitude != current_location.latitude) && (hometown.longitude != current_location.longitude)%>
 						var <%= "line#{counter}" %> = new google.maps.Polyline({
 							    path: [
 							    	new google.maps.LatLng(<%=hometown.latitude%>, <%=hometown.longitude%>),
